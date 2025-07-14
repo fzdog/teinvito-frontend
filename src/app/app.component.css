@@ -1,0 +1,13 @@
+/* Estilos dark para el contenedor principal y enlaces */
+:host {
+  display: block;
+  min-height: 100vh;
+  background: var(--primary-bg);
+  color: var(--primary-text);
+}
+a {
+  color: var(--accent);
+}
+a:hover {
+  text-decoration: underline;
+}

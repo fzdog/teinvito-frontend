@@ -1,1 +1,85 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* Modo dark global usando preferencia del sistema y clase .dark */
+:root {
+  --primary-bg: #18181b;
+  --secondary-bg: #23232b;
+  --primary-text: #f4f4f5;
+  --secondary-text: #a1a1aa;
+  --accent: #6366f1;
+}
+
+body, .dark {
+  background-color: var(--primary-bg);
+  color: var(--primary-text);
+}
+
+body, input, button, select, textarea {
+  font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: var(--primary-bg);
+    color: var(--primary-text);
+  }
+}
+
+/* Botones globales para formularios */
+button, input[type="submit"], .btn {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.7em 1.8em;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 1px 4px #0002;
+  transition: background 0.2s, box-shadow 0.2s;
+  font-size: 1rem;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  outline: none;
+}
+button:disabled, input[type="submit"]:disabled, .btn:disabled {
+  background: #555;
+  cursor: not-allowed;
+}
+button:hover:not(:disabled), input[type="submit"]:hover:not(:disabled), .btn:hover:not(:disabled) {
+  background: #818cf8;
+  box-shadow: 0 2px 8px #0004;
+}
+
+/* Botón secundario */
+.btn-secondary {
+  background: #52525b;
+  color: #fff;
+}
+.btn-secondary:hover:not(:disabled) {
+  background: #71717a;
+}
+
+/* Botón éxito */
+.btn-success {
+  background: #22c55e;
+  color: #fff;
+}
+.btn-success:hover:not(:disabled) {
+  background: #16a34a;
+}
+
+@media (prefers-color-scheme: dark) {
+  .btn-secondary {
+    background: #27272a;
+    color: #fff;
+  }
+  .btn-secondary:hover:not(:disabled) {
+    background: #44444c;
+  }
+  .btn-success {
+    background: #15803d;
+  }
+  .btn-success:hover:not(:disabled) {
+    background: #22c55e;
+  }
+}

@@ -1,0 +1,49 @@
+<div class="admin-container">
+  <h2>Administración de invitados</h2>
+  <form [formGroup]="form" (ngSubmit)="addGuest()" class="admin-form-flex mb-4">
+  <div class="admin-form-label">
+    <label for="name" class="form-label w-100">Nombre del invitado:</label>
+  </div>
+  <div class="admin-form-input">
+    <input id="name" formControlName="name" required class="form-control">
+  </div>
+  <div class="admin-form-button">
+    <button type="submit" class="btn btn-primary w-100" [disabled]="form.invalid">Agregar invitado</button>
+  </div>
+</form>
+<div *ngIf="success" class="success">{{ success }}</div>
+<div *ngIf="error" class="error">{{ error }}</div>
+
+<hr>
+<h3>Lista de invitados</h3>
+<div class="stats">
+  <span><b>Total asistentes confirmados:</b> {{ totalAttendees }}</span>
+  <span><b>No confirmados:</b> {{ notConfirmed }}</span>
+</div>
+<div *ngIf="loading">Cargando invitados...</div>
+<div class="table-responsive">
+  <table *ngIf="guests.length" class="table table-striped align-middle">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Token</th>
+        <th>Link</th>
+        <th>Confirmado</th>
+        <th>Asistentes</th>
+        <th>Fecha confirmación</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let guest of guests">
+        <td>{{ guest.name }}</td>
+        <td>{{ guest.token }}</td>
+        <td>
+          <a [href]="'/confirmar/' + guest.token" target="_blank">Abrir link</a>
+        </td>
+        <td>{{ guest.confirmed ? 'Sí' : 'No' }}</td>
+        <td>{{ guest.attendees || 0 }}</td>
+        <td>{{ guest.confirmationDate ? (guest.confirmationDate | date:'dd/MM/yyyy HH:mm') : '-' }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

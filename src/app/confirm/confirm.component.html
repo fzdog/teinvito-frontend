@@ -1,0 +1,38 @@
+<div *ngIf="loading">Cargando invitación...</div>
+<div *ngIf="error" class="error">{{ error }}</div>
+<div class="confirm-page" *ngIf="!loading && !error">
+  <div class="event-info">
+    <h1 class="welcome-text">¡Hola {{ guestName }}!</h1>
+    <h2>🎂 Convocatoria oficial de cumpleañero 🎈!</h2>
+    <div><b>📅 Fecha:</b> Viernes 01 de Agosto de 2025</div>
+    <div><b>📍 Lugar:</b> Salón Social Conjunto Bioma</div>
+    <div><b>⏰ Hora:</b> 7:00 p.m</div>
+    <div class="event-note">🥂 Tu copa, tu estilo: trae el trago que más te guste para compartir.</div>
+  </div>
+  
+  <p class="welcome-text">Tu asistencia para mí, es el mejor regalo: Vamos a confirmar...</p>
+  <form [formGroup]="form" (ngSubmit)="submit()" *ngIf="!confirmed" class="confirm-form-flex needs-validation">
+  <div class="confirm-form-block">
+    <label for="attendees" class="form-label">¿Cuántas personas asistirán contigo?</label>
+    <input id="attendees" type="number" formControlName="attendees" min="1" required class="form-control">
+    <div *ngIf="form.get('attendees')?.invalid && form.get('attendees')?.touched" class="invalid-feedback d-block">
+      Debe ser al menos 1 persona.
+    </div>
+  </div>
+  <div class="confirm-form-block">
+    <label for="confirmed" class="form-label">¿Vas a asistir?</label>
+    <select id="confirmed" formControlName="confirmed" required class="form-select">
+      <option [ngValue]="true">Sí, asistiré</option>
+      <option [ngValue]="false">No podré asistir</option>
+    </select>
+    <div *ngIf="form.get('confirmed')?.invalid && form.get('confirmed')?.touched" class="invalid-feedback d-block">
+      Debes seleccionar una opción.
+    </div>
+  </div>
+  <div class="confirm-form-block">
+    <button type="submit" class="btn btn-primary w-100" [disabled]="form.invalid || form.get('confirmed')?.disabled">Confirmar</button>
+  </div>
+</form>
+  <div *ngIf="success" class="success">{{ success }}</div>
+  <div *ngIf="confirmationDate" class="confirmation-date">Confirmado el {{ confirmationDate }}</div>
+</div>
