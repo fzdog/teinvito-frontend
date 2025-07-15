@@ -13,6 +13,7 @@ interface Guest {
     confirmed: boolean;
     attendees: number;
     confirmationDate?: string;
+    foto?: string;
 }
 
 @Component({
@@ -33,7 +34,8 @@ export class AdminComponent implements OnInit {
 
     constructor(private fb: FormBuilder, private http: HttpClient) {
         this.form = this.fb.group({
-            name: ['', Validators.required]
+            name: ['', Validators.required],
+            foto: ['']
         });
     }
 

@@ -7,6 +7,12 @@
   <div class="admin-form-input">
     <input id="name" formControlName="name" required class="form-control">
   </div>
+  <div class="admin-form-label">
+    <label for="foto" class="form-label w-100">URL de la foto:</label>
+  </div>
+  <div class="admin-form-input">
+    <input id="foto" formControlName="foto" type="url" placeholder="https://ejemplo.com/foto.jpg" class="form-control">
+  </div>
   <div class="admin-form-button">
     <button type="submit" class="btn btn-primary w-100" [disabled]="form.invalid">Agregar invitado</button>
   </div>
@@ -26,6 +32,7 @@
     <thead>
       <tr>
         <th>Nombre</th>
+        <th>Foto</th>
         <th>Token</th>
         <th>Link</th>
         <th>Confirmado</th>
@@ -36,6 +43,10 @@
     <tbody>
       <tr *ngFor="let guest of guests">
         <td>{{ guest.name }}</td>
+        <td>
+          <img *ngIf="guest.foto" [src]="guest.foto" alt="Foto de {{ guest.name }}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%;">
+          <span *ngIf="!guest.foto">Sin foto</span>
+        </td>
         <td>{{ guest.token }}</td>
         <td>
           <a [href]="'/confirmar/' + guest.token" target="_blank">Abrir link</a>
