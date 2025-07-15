@@ -1,0 +1,310 @@
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.container {
+  perspective: 1000px;
+  width: 90%;
+  max-width: 500px;
+  margin-top: 30px;
+}
+
+#invitation {
+  position: relative;
+  width: 100%;
+  transform-origin: center center;
+  backface-visibility: hidden;
+  border: 5px solid #fff;
+  overflow: hidden;
+}
+
+/* img y placeholder llenan el contenedor */
+#invitation > img,
+#invitation > .placeholder {
+  cursor: default;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Overlay del nombre */
+.overlay {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-family: "Fredoka One", cursive;
+  font-size: 2.5rem;
+  color: #fff;
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.3), 4px 4px 0 rgba(0, 0, 0, 0.2);
+  z-index: 2;
+}
+
+/* Placeholder */
+.placeholder {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+  padding: 20px;
+  background: #1a1a1a;
+  color: #fff;
+  font-family: sans-serif;
+  line-height: 1.4;
+  white-space: pre-wrap;
+}
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.btn {
+  position: relative;
+  padding: 0.4rem 1.2rem 0.4rem 1rem;
+  font-size: 1rem;
+  font-weight: bold;
+  border: 4px solid;
+  border-radius: 0.5rem;
+  background: none;
+  cursor: pointer;
+  color: inherit;
+}
+.btn.confirm {
+  color: #39d353;
+  border-color: #39d353;
+}
+.btn.confirm::after {
+  content: "✔";
+  position: absolute;
+  right: -0.6rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.2rem;
+  color: #39d353;
+}
+.btn.cancel {
+  color: #f84a4b;
+  border-color: #f84a4b;
+}
+.btn.cancel::after {
+  content: "✖";
+  position: absolute;
+  right: -0.6rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.2rem;
+  color: #f84a4b;
+}
+
+/* Flip animations */
+@keyframes flip-out {
+  from {
+    transform: rotateX(0deg);
+  }
+  to {
+    transform: rotateX(90deg);
+  }
+}
+@keyframes flip-in {
+  from {
+    transform: rotateX(-90deg);
+  }
+  to {
+    transform: rotateX(0deg);
+  }
+}
+.flip-out {
+  animation: flip-out 0.3s ease-in forwards;
+}
+.flip-in {
+  animation: flip-in 0.3s ease-out forwards;
+}
+
+/* Importar una fuente similar desde Google Fonts */
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;700&display=swap");
+
+body {
+  background-color: #f0f0f0; /* Un fondo para ver mejor la tarjeta */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: "Montserrat", sans-serif;
+}
+
+.birthday-card {
+  width: 100%;
+  background-color: #1a1a1a;
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+  border-top: 50px solid #4a3b30; /* Simula el borde de madera */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  border: 5px solid #333;
+}
+
+.lights {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  height: 50px;
+  /* IMAGEN REEMPLAZADA con código SVG para máxima fiabilidad */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 100'%3E%3Cpath d='M0,50 Q100,20 200,50 T400,50 T600,50 T800,50' stroke='%23cab27a' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='100' cy='35.5' r='10' fill='%23fff8a6'/%3E%3Ccircle cx='200' cy='50' r='10' fill='%23fff8a6'/%3E%3Ccircle cx='300' cy='64.5' r='10' fill='%23fff8a6'/%3E%3Ccircle cx='400' cy='50' r='10' fill='%23fff8a6'/%3E%3Ccircle cx='500' cy='35.5' r='10' fill='%23fff8a6'/%3E%3Ccircle cx='600' cy='50' r='10' fill='%23fff8a6'/%3E%3Ccircle cx='700' cy='64.5' r='10' fill='%23fff8a6'/%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.card-content {
+  padding: 20px;
+  text-align: center;
+  color: white;
+}
+
+.name {
+  font-family: "Dancing Script", cursive;
+  color: #d4af37;
+  font-size: 3.5em;
+  margin: 10px 0 0 0;
+}
+
+.is-turning {
+  background-color: white;
+  color: #1a1a1a;
+  display: inline-block;
+  padding: 5px 20px;
+  font-weight: bold;
+  clip-path: polygon(10% 0, 90% 0, 100% 50%, 90% 100%, 10% 100%, 0% 50%);
+}
+
+.age {
+  font-size: 5em;
+  color: #d4af37;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.years {
+  font-size: 0.4em;
+  vertical-align: middle;
+}
+
+.invitation-text {
+  font-weight: bold;
+  letter-spacing: 1px;
+  border-top: 1px solid #d4af37;
+  border-bottom: 1px solid #d4af37;
+  padding: 10px 0;
+}
+
+.event-details {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+.detail-item {
+  flex: 1;
+}
+
+.date-number-container {
+  border-left: 2px solid #d4af37;
+  border-right: 2px solid #d4af37;
+  padding: 0 20px;
+}
+
+.date-number {
+  font-size: 3em;
+  font-weight: bold;
+  color: white;
+}
+
+.day,
+.time,
+.month,
+.year {
+  margin: 0;
+  font-size: 1.1em;
+}
+
+.location {
+  margin: 5px 0;
+}
+
+.address-title {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.buttons-container {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.btn {
+  background-color: #d4af37;
+  color: #1a1a1a;
+  border: none;
+  border-radius: 25px;
+  font-weight: bold;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn:hover {
+  background-color: #c09e2a;
+}
+
+.icon-location,
+.icon-confirm {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* Usando SVGs en línea para los iconos para evitar dependencias externas */
+.icon-location {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%231a1a1a"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>');
+}
+
+.icon-confirm {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%231a1a1a"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>');
+}
+
+.footer-image {
+  height: 120px;
+  background-image: url("https://i.pinimg.com/originals/7a/3b/b5/7a3bb56952750e3025215283726591b5.png"); /* URL de una imagen de cervezas en hielo */
+  background-size: cover;
+  background-position: center bottom;
+  position: relative;
+}
+
+.cheers-text {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: "Dancing Script", cursive;
+  color: #d4af37;
+  font-size: 2em;
+  text-shadow: 1px 1px 3px #000;
+}

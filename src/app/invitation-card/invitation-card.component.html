@@ -1,0 +1,62 @@
+<div class="container" (click)="flip()">
+  <div
+    #invitation
+    id="invitation"
+    [class.flip-out]="isFlippingOut"
+    [class.flip-in]="isFlippingIn"
+  >
+    <!-- 1) Imagen y overlay -->
+    <img
+      *ngIf="toggled"
+      #invitationImg
+      [src]="imageURL"
+      alt="Invitación de cumpleaños"
+      (load)="onImgLoad()"
+    />
+    <div *ngIf="toggled" class="overlay animate__animated animate__flipInX">
+      {{ userName }}
+    </div>
+
+    <!-- 2) Placeholder con texto y botones -->
+    <div class="birthday-card" *ngIf="!toggled">
+      <div class="lights"></div>
+      <div class="card-content">
+        <h1 class="name">Fer</h1>
+        <p class="is-turning">Está cumpliendo años</p>
+
+        <p class="invitation-text">ACOMPÁÑANOS A CELEBRAR</p>
+
+        <div class="event-details">
+          <div class="detail-item">
+            <p class="day">Sábado</p>
+            <p class="time">7:00 pm</p>
+          </div>
+          <div class="date-number-container">
+            <p class="date-number">01</p>
+          </div>
+          <div class="detail-item">
+            <p class="month">Agosto</p>
+            <p class="year">2025</p>
+          </div>
+        </div>
+
+        <div class="location">
+          <p class="address-title">Dirección</p>
+          <p class="address-details">Salón social Conjunto Bioma</p>
+        </div>
+
+        <div class="buttons-container">
+          <a href="#" class="btn location-btn">
+            <span class="icon-location"></span> VER UBICACIÓN
+          </a>
+          <a href="#" class="btn rsvp-btn">
+            <span class="icon-confirm"></span> CONFIRMAR ASISTENCIA
+          </a>
+        </div>
+      </div>
+      <div class="footer-image">
+        <p class="cheers-text">¡Te esperamos..!</p>
+      </div>
+    </div>
+  </div>
+</div>
