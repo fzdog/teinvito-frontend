@@ -1,4 +1,4 @@
-<div class="container" (click)="flip()">
+<div class="container" (click)="!showConfirmation && flip()">
   <div
     #invitation
     id="invitation"
@@ -18,7 +18,7 @@
     </div>
 
     <!-- 2) Placeholder con texto y botones -->
-    <div class="birthday-card" *ngIf="!toggled">
+    <div class="birthday-card" *ngIf="!toggled && !showConfirmation">
       <div class="lights"></div>
       <div class="card-content">
         <h1 class="name">Fer</h1>
@@ -44,18 +44,113 @@
           <p class="address-title">Dirección</p>
           <p class="address-details">Salón social Conjunto Bioma</p>
         </div>
-
+        <div class="event-note">
+          🥂 Tu copa, tu estilo: trae el trago que más te guste para compartir.
+        </div>
         <div class="buttons-container">
           <a href="#" class="btn location-btn">
             <span class="icon-location"></span> VER UBICACIÓN
           </a>
-          <a href="#" class="btn rsvp-btn">
+          <button
+            (click)="showConfirm(); $event.stopPropagation()"
+            class="btn rsvp-btn"
+          >
             <span class="icon-confirm"></span> CONFIRMAR ASISTENCIA
-          </a>
+          </button>
         </div>
       </div>
       <div class="footer-image">
         <p class="cheers-text">¡Te esperamos..!</p>
+      </div>
+    </div>
+    <!-- 3) Pantalla de confirmación -->
+    <div class="confirm-page" *ngIf="showConfirmation && !toggled">
+      <p class="welcome-text">
+        Tu asistencia para mí, es el mejor regalo: Vamos a confirmar...
+      </p>
+
+      <form
+        [formGroup]="confirmForm"
+        (ngSubmit)="submitConfirmation()"
+        *ngIf="!confirmed"
+        class="confirm-form-flex needs-validation"
+      >
+        <div class="confirm-form-block">
+          <label for="attendees" class="form-label"
+            >¿Cuántas personas asistirán contigo?</label
+          >
+          <input
+            id="attendees"
+            type="number"
+            formControlName="attendees"
+            min="1"
+            required
+            class="form-control"
+          />
+          <div
+            *ngIf="
+              confirmForm.get('attendees')?.invalid &&
+              confirmForm.get('attendees')?.touched
+            "
+            class="invalid-feedback d-block"
+          >
+            Debe ser al menos 1 persona.
+          </div>
+        </div>
+        <div class="confirm-form-block">
+          <label for="confirmed" class="form-label">¿Vas a asistir?</label>
+          <select
+            id="confirmed"
+            formControlName="confirmed"
+            required
+            class="form-select"
+          >
+            <option [ngValue]="true">Sí, asistiré</option>
+            <option [ngValue]="false">No podré asistir</option>
+          </select>
+          <div
+            *ngIf="
+              confirmForm.get('confirmed')?.invalid &&
+              confirmForm.get('confirmed')?.touched
+            "
+            class="invalid-feedback d-block"
+          >
+            Debes seleccionar una opción.
+          </div>
+        </div>
+        <div class="confirm-form-block">
+          <button
+            type="submit"
+            class="btn btn-primary w-100"
+            [disabled]="confirmForm.invalid"
+          >
+            Confirmar
+          </button>
+        </div>
+        <div class="confirm-form-block">
+          <button
+            type="button"
+            (click)="goBack()"
+            class="btn btn-secondary w-100"
+          >
+            <span class="icon-back"></span> Volver
+          </button>
+        </div>
+      </form>
+
+      <div *ngIf="success" class="success">{{ success }}</div>
+      <div *ngIf="confirmationDate" class="confirmation-date">
+        Confirmado el {{ confirmationDate }}
+      </div>
+
+      <div *ngIf="confirmed" class="confirm-form-flex">
+        <button
+          type="button"
+          (click)="goBack()"
+          class="btn btn-secondary w-100"
+        >
+          <span class="icon-back"></span> Volver a la invitación
+        </button>
       </div>
     </div>
   </div>

@@ -11,23 +11,19 @@ import { AdminComponent } from './admin/admin.component';
 const routes: Routes = [
   { path: 'admin', component: AdminComponent },
   { path: 'confirmar/:token', component: ConfirmComponent },
-  { path: '**', redirectTo: 'confirmar/demo-token' }
+  { path: '**', redirectTo: 'confirmar/demo-token' },
 ];
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    ConfirmComponent,
-    AdminComponent
-  ],
+  declarations: [AppComponent, ConfirmComponent, AdminComponent],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
