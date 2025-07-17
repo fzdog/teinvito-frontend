@@ -76,102 +76,101 @@
     </div>
     <!-- 3) Pantalla de confirmación -->
     <div class="confirm-page" *ngIf="showConfirmation && !toggled">
-      <p class="welcome-text">
-        ¡Hola {{ guestName }}! Tu asistencia para mí, es el mejor regalo: Vamos
-        a confirmar...
-      </p>
+      <div class="confirm-content">
+        <div class="welcome-message">
+          <p class="greeting-text">
+            <span class="guest-name">{{ guestName }}</span
+            >!
+          </p>
+          <p class="message-text">Tu asistencia para mí, es el mejor regalo</p>
+          <p class="action-text">Vamos a confirmar...</p>
+        </div>
 
-      <form
-        [formGroup]="confirmForm"
-        (ngSubmit)="submitConfirmation()"
-        *ngIf="!confirmed"
-        class="confirm-form-flex needs-validation"
-      >
-        <div class="confirm-form-block">
-          <label for="confirmed" class="form-label">¿Vas a asistir?</label>
-          <select
-            id="confirmed"
-            formControlName="confirmed"
-            required
-            class="form-select"
-          >
-            <option [ngValue]="true">Sí, asistiré</option>
-            <option [ngValue]="false">No podré asistir</option>
-          </select>
-          <div
-            *ngIf="
-              confirmForm.get('confirmed')?.invalid &&
-              confirmForm.get('confirmed')?.touched
-            "
-            class="invalid-feedback d-block"
-          >
-            Debes seleccionar una opción.
+        <form
+          [formGroup]="confirmForm"
+          (ngSubmit)="submitConfirmation()"
+          *ngIf="!confirmed"
+          class="confirm-form-flex needs-validation"
+        >
+          <div class="confirm-form-block">
+            <label for="confirmed" class="form-label">¿Vas a asistir?</label>
+            <select
+              id="confirmed"
+              formControlName="confirmed"
+              required
+              class="form-select"
+            >
+              <option [ngValue]="true">Sí, asistiré</option>
+              <option [ngValue]="false">No podré asistir</option>
+            </select>
+            <div
+              *ngIf="
+                confirmForm.get('confirmed')?.invalid &&
+                confirmForm.get('confirmed')?.touched
+              "
+              class="invalid-feedback d-block"
+            >
+              Debes seleccionar una opción.
+            </div>
           </div>
-        </div>
-        <div class="confirm-form-block">
-          <label for="attendees" class="form-label"
-            >¿Cuántas personas asistirán contigo?</label
-          >
-          <input
-            id="attendees"
-            type="number"
-            formControlName="attendees"
-            min="1"
-            required
-            class="form-control"
-            [class.disabled-field]="
-              confirmForm.get('confirmed')?.value === false
-            "
-          />
-          <div
-            *ngIf="
-              confirmForm.get('attendees')?.invalid &&
-              confirmForm.get('attendees')?.touched &&
-              confirmForm.get('confirmed')?.value !== false
-            "
-            class="invalid-feedback d-block"
-          >
-            Debe ser al menos 1 persona.
+          <div class="confirm-form-block">
+            <label for="attendees" class="form-label"
+              >¿Cuántas personas asistirán contigo?</label
+            >
+            <input
+              id="attendees"
+              type="number"
+              formControlName="attendees"
+              min="1"
+              required
+              class="form-control"
+              [class.disabled-field]="
+                confirmForm.get('confirmed')?.value === false
+              "
+            />
+            <div
+              *ngIf="
+                confirmForm.get('attendees')?.invalid &&
+                confirmForm.get('attendees')?.touched &&
+                confirmForm.get('confirmed')?.value !== false
+              "
+              class="invalid-feedback d-block"
+            >
+              Debe ser al menos 1 persona.
+            </div>
+            <div
+              *ngIf="confirmForm.get('confirmed')?.value === false"
+              class="field-note"
+            >
+              Si cambias de opinión, puedes confirmar más tarde! 😉
+            </div>
           </div>
-          <div
-            *ngIf="confirmForm.get('confirmed')?.value === false"
-            class="field-note"
-          >
-            Si cambias de opinión, puedes confirmar más tarde! 😉
-          </div>
-        </div>
-        <div class="confirm-form-block">
+        </form>
+
+        <div *ngIf="success" class="success">{{ success }}</div>
+        <div *ngIf="error" class="error">{{ error }}</div>
+      </div>
+
+      <div class="confirm-buttons">
+        <div *ngIf="!confirmed" class="buttons-container">
+          <button type="button" (click)="goBack()" class="btn btn-secondary">
+            <span class="icon-back"></span> Volver
+          </button>
           <button
             type="button"
-            class="btn btn-primary w-100"
+            class="btn btn-primary"
             [disabled]="confirmForm.invalid"
             (click)="submitConfirmation()"
           >
             {{ confirmButtonText }}
           </button>
         </div>
-        <div class="confirm-form-block">
-          <button
-            type="button"
-            (click)="goBack()"
-            class="btn btn-secondary w-100"
-          >
-            <span class="icon-back"></span> Volver
+
+        <div *ngIf="confirmed" class="buttons-container">
+          <button type="button" (click)="goBack()" class="btn btn-secondary">
+            <span class="icon-back"></span> Volver a la invitación
           </button>
         </div>
-      </form>
-
-      <div *ngIf="success" class="success">{{ success }}</div>
-      <div *ngIf="error" class="error">{{ error }}</div>
-
-      <div *ngIf="confirmed">
-        <button
-          type="button"
-          (click)="goBack()"
-          class="btn btn-secondary w-100"
-        >
-          <span class="icon-back"></span> Volver a la invitación
-        </button>
       </div>
     </div>
   </div>

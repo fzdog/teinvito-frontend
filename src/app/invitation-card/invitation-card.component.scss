@@ -564,6 +564,9 @@ body {
   color: white;
   height: 100%;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .event-info {
@@ -589,12 +592,50 @@ body {
   color: #d4af37;
 }
 
-.welcome-text {
+.welcome-message {
   text-align: center;
-  margin-bottom: 0.5em;
-  color: #d4af37;
+  margin-bottom: 1.5em;
+  padding: 1em;
 }
 
+.greeting-text {
+  font-size: clamp(1.2em, 3.5vw, 1.6em);
+  color: #d4af37;
+  margin-bottom: 0.5em;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.guest-name {
+  font-family: "Dancing Script", cursive;
+  font-size: 1.3em;
+  color: #f4d03f;
+  font-weight: 700;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  display: inline-block;
+  transform: scale(1.05);
+}
+
+.message-text {
+  font-size: clamp(1em, 2.8vw, 1.2em);
+  color: #ffffff;
+  margin-bottom: 0.3em;
+  line-height: 1.4;
+  font-weight: 300;
+  opacity: 0.95;
+}
+
+.action-text {
+  font-size: clamp(0.9em, 2.5vw, 1.1em);
+  color: #d4af37;
+  margin-bottom: 0;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-style: italic;
+}
+
+/* Estilos para el formulario de confirmación */
 .confirm-form-flex {
   display: flex;
   flex-direction: column;
@@ -1029,4 +1070,30 @@ body {
 /* Clase utility para ancho completo */
 .w-100 {
   width: 100% !important;
+}
+
+/* Contenedor de contenido de confirmación */
+.confirm-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Contenedor de botones en la parte inferior */
+.confirm-buttons {
+  flex-shrink: 0;
+  margin-top: 20px;
+}
+
+/* Reutilizar el estilo de buttons-container para la página de confirmación */
+.confirm-page .buttons-container {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+/* Hacer que los botones en confirm-page tengan flex: 1 para mismo ancho */
+.confirm-page .buttons-container .btn {
+  flex: 1;
 }
