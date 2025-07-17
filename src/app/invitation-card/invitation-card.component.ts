@@ -89,6 +89,7 @@ export class InvitationCardComponent implements OnInit, AfterViewInit {
       .subscribe({
         next: (data) => {
           console.log('Guest data:', data);
+          this.userName = data.name;
           this.guestName = data.name;
           this.imageURL = '/assets/images/' + data.foto + '.png';
           this.loading = false;
@@ -103,6 +104,8 @@ export class InvitationCardComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {}
 
   onImgLoad() {
+    if (!this.invitationImgRef?.nativeElement) return;
+    
     const img = this.invitationImgRef.nativeElement;
     if (!this.aspectRatio) {
       this.aspectRatio = img.naturalHeight / img.naturalWidth;
@@ -112,6 +115,8 @@ export class InvitationCardComponent implements OnInit, AfterViewInit {
   }
 
   private setFixedHeight() {
+    if (!this.invitationRef?.nativeElement) return;
+    
     const el = this.invitationRef.nativeElement;
     const w = el.offsetWidth;
     el.style.height = `${w * (this.aspectRatio || 1)}px`;
@@ -148,13 +153,17 @@ export class InvitationCardComponent implements OnInit, AfterViewInit {
       this.isFlippingIn = true;
 
       // Agregar clase flipInY al elemento
-      const element = this.invitationRef.nativeElement;
-      element.classList.add('flipInY');
+      const element = this.invitationRef?.nativeElement;
+      if (element) {
+        element.classList.add('flipInY');
+      }
 
       setTimeout(() => {
         this.isFlippingIn = false;
         this.animating = false;
-        element.classList.remove('flipInY');
+        if (element) {
+          element.classList.remove('flipInY');
+        }
       }, 600); // 600ms para que coincida con la duración de flipInY
     }, 300);
   }
@@ -186,11 +195,18 @@ export class InvitationCardComponent implements OnInit, AfterViewInit {
   }
 
   goBack() {
-    if (this.animating) return;
+    console.log('goBack() method called');
+    if (this.animating) {
+      console.log('Animation in progress, returning early');
+      return;
+    }
+    
+    console.log('Starting goBack animation');
     this.animating = true;
     this.isFlippingOut = true;
 
     setTimeout(() => {
+      console.log('First timeout executed - resetting form state');
       this.isFlippingOut = false;
       this.showConfirmation = false;
       this.confirmed = false;
@@ -210,13 +226,19 @@ export class InvitationCardComponent implements OnInit, AfterViewInit {
       this.isFlippingIn = true;
 
       // Agregar clase flipInY al elemento para el efecto de retorno
-      const element = this.invitationRef.nativeElement;
-      element.classList.add('flipInY');
+      const element = this.invitationRef?.nativeElement;
+      if (element) {
+        element.classList.add('flipInY');
+      }
 
       setTimeout(() => {
+        console.log('Second timeout executed - finishing animation');
         this.isFlippingIn = false;
         this.animating = false;
-        element.classList.remove('flipInY');
+        if (element) {
+          element.classList.remove('flipInY');
+        }
+        console.log('goBack() completed successfully');
       }, 600); // 600ms para que coincida con la duración de flipInY
     }, 300);
   }
