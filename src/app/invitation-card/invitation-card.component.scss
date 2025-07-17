@@ -628,18 +628,76 @@ body {
 }
 
 .success {
-  color: #39d353;
+  color: #fff;
   text-align: center;
   margin: 1.5em auto 1em auto;
-  font-size: 1.15em;
+  padding: 16px 24px;
+  font-size: clamp(1.2em, 3vw, 1.4em);
   font-weight: bold;
+  border-radius: 15px;
+  border: 3px solid #cab27a;
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3),
+    inset 0 2px 5px rgba(255, 255, 255, 0.2);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+  animation: successGlow 2s ease-in-out infinite alternate;
+}
+
+.success::before {
+  content: "🎉";
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.2em;
+  animation: bounce 1.5s ease-in-out infinite;
+}
+
+.success::after {
+  content: "🎉";
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.2em;
+  animation: bounce 1.5s ease-in-out infinite 0.3s;
+}
+
+@keyframes successGlow {
+  0% {
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3),
+      inset 0 2px 5px rgba(255, 255, 255, 0.2);
+  }
+  100% {
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5),
+      inset 0 2px 8px rgba(255, 255, 255, 0.3);
+  }
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(-50%) scale(1);
+  }
+  50% {
+    transform: translateY(-50%) scale(1.1);
+  }
 }
 
 .confirmation-date {
   text-align: center;
   margin: 1em auto 0.5em auto;
   color: #d4af37;
-  font-size: 1.05em;
+  font-size: clamp(1em, 2.5vw, 1.1em);
+  font-weight: 600;
+  background: rgba(212, 175, 55, 0.1);
+  padding: 8px 16px;
+  border-radius: 10px;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  display: inline-block;
+  letter-spacing: 0.5px;
 }
 
 /* Estilos para estados de carga y error */
@@ -717,6 +775,22 @@ div:has(> :first-child:contains("Cargando")) {
 
   .event-note {
     padding: 0 5px;
+  }
+
+  .success {
+    margin: 1em auto 0.8em auto;
+    padding: 12px 20px;
+    font-size: clamp(1.1em, 4vw, 1.3em);
+  }
+
+  .success::before,
+  .success::after {
+    font-size: 1em;
+  }
+
+  .confirmation-date {
+    font-size: clamp(0.9em, 3vw, 1em);
+    padding: 6px 12px;
   }
 }
 
