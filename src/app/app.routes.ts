@@ -6,6 +6,6 @@ import { InvitationCardComponent } from './invitation-card/invitation-card.compo
 export const routes: Routes = [
   { path: 'admin-app', component: AdminComponent },
   { path: 'confirmar/:token', component: ConfirmComponent },
-  { path: 'invitation-card', component: InvitationCardComponent },
-  { path: '**', redirectTo: 'confirmar/demo-token' },
+  { path: 'invitation-card/:token', component: InvitationCardComponent },
+  { path: '**', redirectTo: 'invitation-card/demo-token' },
 ];

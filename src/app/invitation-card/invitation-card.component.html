@@ -1,4 +1,6 @@
-<div class="container" (click)="!showConfirmation && flip()">
+<div *ngIf="loading">Cargando invitación...</div>
+<div *ngIf="error" class="error">{{ error }}</div>
+<div class="container" (click)="!showConfirmation && flip()" *ngIf="!loading && !error">
   <div
     #invitation
     id="invitation"
@@ -71,7 +73,7 @@
     <!-- 3) Pantalla de confirmación -->
     <div class="confirm-page" *ngIf="showConfirmation && !toggled">
       <p class="welcome-text">
-        Tu asistencia para mí, es el mejor regalo: Vamos a confirmar...
+        ¡Hola {{ guestName }}! Tu asistencia para mí, es el mejor regalo: Vamos a confirmar...
       </p>
 
       <form
@@ -154,6 +156,7 @@
       </form>
 
       <div *ngIf="success" class="success">{{ success }}</div>
+      <div *ngIf="error" class="error">{{ error }}</div>
       <div *ngIf="confirmationDate" class="confirmation-date">
         Confirmado el {{ confirmationDate }}
       </div>

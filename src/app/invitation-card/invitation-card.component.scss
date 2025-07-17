@@ -642,6 +642,30 @@ body {
   font-size: 1.05em;
 }
 
+/* Estilos para estados de carga y error */
+div[ng-reflect-ng-if="loading"], 
+div:has(> :first-child:contains("Cargando")) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 1.2em;
+  color: #d4af37;
+  font-weight: bold;
+}
+
+.error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+  color: #f84a4b;
+  font-size: 1.2em;
+  font-weight: bold;
+  padding: 20px;
+}
+
 /* Media queries para dispositivos móviles */
 @media (max-width: 480px) {
   :host {

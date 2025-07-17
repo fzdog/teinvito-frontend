@@ -1,11 +1,20 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  ViewChild,
+  OnInit,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 import {
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-invitation-card',
@@ -14,15 +23,15 @@ import {
   templateUrl: './invitation-card.component.html',
   styleUrl: './invitation-card.component.scss',
 })
-export class InvitationCardComponent implements AfterViewInit {
+export class InvitationCardComponent implements OnInit, AfterViewInit {
   @ViewChild('invitation', { static: true })
   invitationRef!: ElementRef<HTMLDivElement>;
   @ViewChild('invitationImg') invitationImgRef!: ElementRef<HTMLImageElement>;
 
-  userName = 'mata-cata';
+  userName = '';
   // trae la imagen de un usuario, de assets/images/usuario.png
   // en este caso, la imagen es 'lopera.png'
-  imageURL = '/assets/images/' + this.userName + '.png'; // Placeholder image
+  imageURL = ''; // Placeholder image
   toggled = true;
   animating = false;
   isFlippingOut = false;
@@ -35,7 +44,16 @@ export class InvitationCardComponent implements AfterViewInit {
   confirmationDate: string | null = null;
   private aspectRatio: number | null = null;
 
-  constructor(private fb: FormBuilder) {
+  // Propiedades para validación de token
+  loading = true;
+  error = '';
+  token = '';
+
+  constructor(
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private http: HttpClient
+  ) {
     this.confirmForm = this.fb.group({
       attendees: [1, [Validators.required, Validators.min(1)]],
       confirmed: [null, Validators.required],
@@ -62,6 +80,24 @@ export class InvitationCardComponent implements AfterViewInit {
       }
       attendeesControl?.updateValueAndValidity();
     });
+  }
+
+  ngOnInit() {
+    this.token = this.route.snapshot.paramMap.get('token') || '';
+    this.http
+      .get<any>(`${environment.apiUrl}/invitado/${this.token}`)
+      .subscribe({
+        next: (data) => {
+          console.log('Guest data:', data);
+          this.guestName = data.name;
+          this.imageURL = '/assets/images/' + data.foto + '.png';
+          this.loading = false;
+        },
+        error: (err) => {
+          this.error = err.error.message || 'Invitación no encontrada.';
+          this.loading = false;
+        },
+      });
   }
 
   ngAfterViewInit() {}
@@ -126,10 +162,27 @@ export class InvitationCardComponent implements AfterViewInit {
   submitConfirmation() {
     if (this.confirmForm.invalid) return;
 
-    // Simulamos el envío de la confirmación
-    this.success = '¡Confirmación registrada exitosamente!';
-    this.confirmed = true;
-    this.confirmationDate = new Date().toLocaleString();
+    this.http
+      .post<any>(
+        `${environment.apiUrl}/invitado/${this.token}/confirmar`,
+        this.confirmForm.value
+      )
+      .subscribe({
+        next: (response) => {
+          this.success = response.message || 'Respuesta registrada.';
+          this.error = '';
+          this.confirmed = true;
+          if (response.confirmationDate) {
+            this.confirmationDate = new Date(
+              response.confirmationDate
+            ).toLocaleString();
+          }
+        },
+        error: (err) => {
+          this.error = err.error.message || 'Error al confirmar asistencia.';
+          this.success = '';
+        },
+      });
   }
 
   goBack() {
@@ -142,6 +195,7 @@ export class InvitationCardComponent implements AfterViewInit {
       this.showConfirmation = false;
       this.confirmed = false;
       this.success = '';
+      this.error = '';
       this.confirmationDate = null;
       // Resetear el formulario a sus valores iniciales
       this.confirmForm.reset({
