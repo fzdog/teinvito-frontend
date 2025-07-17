@@ -643,7 +643,7 @@ body {
 }
 
 /* Estilos para estados de carga y error */
-div[ng-reflect-ng-if="loading"], 
+div[ng-reflect-ng-if="loading"],
 div:has(> :first-child:contains("Cargando")) {
   display: flex;
   justify-content: center;
