@@ -642,19 +642,27 @@ body {
 .btn-primary {
   background: linear-gradient(135deg, #d4af37 0%, #f4d03f 50%, #d4af37 100%);
   color: #1a1a1a;
-  border: 2px solid #b8941f;
+  border: 2px solid #cab27a;
   box-shadow: 0 2px 8px rgba(212, 175, 55, 0.25),
     0 4px 12px rgba(212, 175, 55, 0.15),
-    inset 0 2px 5px rgba(255, 255, 255, 0.1);
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    inset 0 2px 5px rgba(255, 255, 255, 0.2);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
   border-radius: 20px;
-  padding: 0.75em 1.5em;
+  padding: clamp(8px, 2vw, 12px) clamp(12px, 3vw, 16px);
   font-weight: bold;
   cursor: pointer;
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
   margin-bottom: 2px; /* Espacio para la sombra */
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: clamp(0.75em, 2vw, 0.9em);
+  text-align: center;
+  min-height: 40px;
 }
 
 .btn-primary::before {
@@ -667,18 +675,18 @@ body {
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(255, 255, 255, 0.2),
+    rgba(255, 255, 255, 0.3),
     transparent
   );
   transition: left 0.5s;
 }
 
 .btn-primary:hover:not(:disabled) {
-  background: linear-gradient(135deg, #b8941f 0%, #d4af37 50%, #b8941f 100%);
+  background: linear-gradient(135deg, #c09e2a 0%, #e6c935 50%, #c09e2a 100%);
   transform: translateY(-1px);
   box-shadow: 0 3px 10px rgba(212, 175, 55, 0.3),
     0 6px 15px rgba(212, 175, 55, 0.2),
-    inset 0 2px 8px rgba(255, 255, 255, 0.15);
+    inset 0 2px 8px rgba(255, 255, 255, 0.25);
 }
 
 .btn-primary:hover:not(:disabled)::before {
@@ -708,13 +716,21 @@ body {
     inset 0 2px 5px rgba(255, 255, 255, 0.2);
   text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.3);
   border-radius: 20px;
-  padding: 0.75em 1.5em;
+  padding: clamp(8px, 2vw, 12px) clamp(12px, 3vw, 16px);
   font-weight: bold;
   cursor: pointer;
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
   margin-bottom: 2px; /* Espacio para la sombra */
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: clamp(0.75em, 2vw, 0.9em);
+  text-align: center;
+  min-height: 40px;
 }
 
 .btn-secondary::before {
@@ -983,4 +999,9 @@ body {
   .rsvp-btn:hover {
     transform: none; /* Deshabilitar el efecto hover en móviles */
   }
+}
+
+/* Clase utility para ancho completo */
+.w-100 {
+  width: 100% !important;
 }
