@@ -142,9 +142,10 @@
         </div>
         <div class="confirm-form-block">
           <button
-            type="submit"
+            type="button"
             class="btn btn-primary w-100"
             [disabled]="confirmForm.invalid"
+            (click)="submitConfirmation()"
           >
             {{ confirmButtonText }}
           </button>
