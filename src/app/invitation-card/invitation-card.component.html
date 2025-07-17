@@ -36,7 +36,7 @@
         <div class="event-info">
           <div class="event-details">
             <div class="detail-item">
-              <p class="day">Sábado</p>
+              <p class="day">Viernes</p>
               <p class="time">7:00 pm</p>
             </div>
             <div class="date-number-container">
@@ -56,6 +56,7 @@
             🥂 Tu copa, tu estilo: trae el trago que más te guste para
             compartir.
           </div>
+          <p class="cheers-text">¡Te esperamos..!</p>
         </div>
 
         <div class="buttons-container">
@@ -70,9 +71,6 @@
           </button>
         </div>
       </div>
-      <div class="footer-image">
-        <p class="cheers-text">¡Te esperamos..!</p>
-      </div>
     </div>
     <!-- 3) Pantalla de confirmación -->
     <div class="confirm-page" *ngIf="showConfirmation && !toggled">
@@ -82,8 +80,10 @@
             <span class="guest-name">{{ guestName }}</span
             >!
           </p>
-          <p class="message-text">Tu asistencia para mí, es el mejor regalo</p>
-          <p class="action-text">Vamos a confirmar...</p>
+          <p class="message-text" *ngIf="!confirmed">
+            Tu asistencia para mí, es el mejor regalo
+          </p>
+          <p class="action-text" *ngIf="!confirmed">Vamos a confirmar...</p>
         </div>
 
         <form
