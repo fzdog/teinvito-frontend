@@ -21,32 +21,37 @@
     <div class="birthday-card" *ngIf="!toggled && !showConfirmation">
       <div class="lights"></div>
       <div class="card-content">
-        <h1 class="name">Fer</h1>
-        <p class="is-turning">Está cumpliendo años</p>
+        <div class="main-content">
+          <h1 class="name">Fer</h1>
+          <p class="is-turning">Está cumpliendo años</p>
+          <p class="invitation-text">ACOMPÁÑANOS A CELEBRAR</p>
+        </div>
 
-        <p class="invitation-text">ACOMPÁÑANOS A CELEBRAR</p>
+        <div class="event-info">
+          <div class="event-details">
+            <div class="detail-item">
+              <p class="day">Sábado</p>
+              <p class="time">7:00 pm</p>
+            </div>
+            <div class="date-number-container">
+              <p class="date-number">01</p>
+            </div>
+            <div class="detail-item">
+              <p class="month">Agosto</p>
+              <p class="year">2025</p>
+            </div>
+          </div>
 
-        <div class="event-details">
-          <div class="detail-item">
-            <p class="day">Sábado</p>
-            <p class="time">7:00 pm</p>
+          <div class="location">
+            <p class="address-title">Dirección</p>
+            <p class="address-details">Salón social Conjunto Bioma</p>
           </div>
-          <div class="date-number-container">
-            <p class="date-number">01</p>
-          </div>
-          <div class="detail-item">
-            <p class="month">Agosto</p>
-            <p class="year">2025</p>
+          <div class="event-note">
+            🥂 Tu copa, tu estilo: trae el trago que más te guste para
+            compartir.
           </div>
         </div>
 
-        <div class="location">
-          <p class="address-title">Dirección</p>
-          <p class="address-details">Salón social Conjunto Bioma</p>
-        </div>
-        <div class="event-note">
-          🥂 Tu copa, tu estilo: trae el trago que más te guste para compartir.
-        </div>
         <div class="buttons-container">
           <a href="#" class="btn location-btn">
             <span class="icon-location"></span> VER UBICACIÓN
@@ -76,28 +81,6 @@
         class="confirm-form-flex needs-validation"
       >
         <div class="confirm-form-block">
-          <label for="attendees" class="form-label"
-            >¿Cuántas personas asistirán contigo?</label
-          >
-          <input
-            id="attendees"
-            type="number"
-            formControlName="attendees"
-            min="1"
-            required
-            class="form-control"
-          />
-          <div
-            *ngIf="
-              confirmForm.get('attendees')?.invalid &&
-              confirmForm.get('attendees')?.touched
-            "
-            class="invalid-feedback d-block"
-          >
-            Debe ser al menos 1 persona.
-          </div>
-        </div>
-        <div class="confirm-form-block">
           <label for="confirmed" class="form-label">¿Vas a asistir?</label>
           <select
             id="confirmed"
@@ -116,6 +99,38 @@
             class="invalid-feedback d-block"
           >
             Debes seleccionar una opción.
+          </div>
+        </div>
+        <div class="confirm-form-block">
+          <label for="attendees" class="form-label"
+            >¿Cuántas personas asistirán contigo?</label
+          >
+          <input
+            id="attendees"
+            type="number"
+            formControlName="attendees"
+            min="1"
+            required
+            class="form-control"
+            [class.disabled-field]="
+              confirmForm.get('confirmed')?.value === false
+            "
+          />
+          <div
+            *ngIf="
+              confirmForm.get('attendees')?.invalid &&
+              confirmForm.get('attendees')?.touched &&
+              confirmForm.get('confirmed')?.value !== false
+            "
+            class="invalid-feedback d-block"
+          >
+            Debe ser al menos 1 persona.
+          </div>
+          <div
+            *ngIf="confirmForm.get('confirmed')?.value === false"
+            class="field-note"
+          >
+            Si cambias de opinión, puedes confirmar más tarde! 😉
           </div>
         </div>
         <div class="confirm-form-block">

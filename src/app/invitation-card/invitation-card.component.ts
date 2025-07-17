@@ -1,6 +1,11 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-invitation-card',
@@ -33,7 +38,29 @@ export class InvitationCardComponent implements AfterViewInit {
   constructor(private fb: FormBuilder) {
     this.confirmForm = this.fb.group({
       attendees: [1, [Validators.required, Validators.min(1)]],
-      confirmed: [null, Validators.required]
+      confirmed: [null, Validators.required],
+    });
+
+    // Escuchar cambios en el campo 'confirmed' para ajustar el comportamiento de 'attendees'
+    this.confirmForm.get('confirmed')?.valueChanges.subscribe((willAttend) => {
+      const attendeesControl = this.confirmForm.get('attendees');
+
+      if (willAttend === false) {
+        // Si no va a asistir, establecer attendees en 0 y deshabilitar
+        attendeesControl?.setValue(0);
+        attendeesControl?.disable();
+        // Remover validaciones cuando no asiste
+        attendeesControl?.clearValidators();
+      } else if (willAttend === true) {
+        // Si va a asistir, habilitar el campo y restaurar validaciones
+        attendeesControl?.enable();
+        attendeesControl?.setValue(1);
+        attendeesControl?.setValidators([
+          Validators.required,
+          Validators.min(1),
+        ]);
+      }
+      attendeesControl?.updateValueAndValidity();
     });
   }
 
@@ -83,7 +110,7 @@ export class InvitationCardComponent implements AfterViewInit {
       this.isFlippingOut = false;
       this.showConfirmation = true;
       this.isFlippingIn = true;
-      
+
       // Agregar clase flipInY al elemento
       const element = this.invitationRef.nativeElement;
       element.classList.add('flipInY');
@@ -98,7 +125,7 @@ export class InvitationCardComponent implements AfterViewInit {
 
   submitConfirmation() {
     if (this.confirmForm.invalid) return;
-    
+
     // Simulamos el envío de la confirmación
     this.success = '¡Confirmación registrada exitosamente!';
     this.confirmed = true;
@@ -119,10 +146,15 @@ export class InvitationCardComponent implements AfterViewInit {
       // Resetear el formulario a sus valores iniciales
       this.confirmForm.reset({
         attendees: 1,
-        confirmed: null
+        confirmed: null,
       });
+      // Asegurar que el campo attendees esté habilitado y con validaciones
+      const attendeesControl = this.confirmForm.get('attendees');
+      attendeesControl?.enable();
+      attendeesControl?.setValidators([Validators.required, Validators.min(1)]);
+      attendeesControl?.updateValueAndValidity();
       this.isFlippingIn = true;
-      
+
       // Agregar clase flipInY al elemento para el efecto de retorno
       const element = this.invitationRef.nativeElement;
       element.classList.add('flipInY');
